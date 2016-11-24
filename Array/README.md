@@ -100,3 +100,9 @@ a.slice(0, 2); //[1, 2]
 a.slice(0, -1); //[1, 2, 3]
 ```
 
+- **forEach**
+- **map**
+- **filter**
+- **every和some**
+- **reduce和reduceRight**
+- **indexOf和lastIndexOf**
