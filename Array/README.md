@@ -101,8 +101,54 @@ a.slice(0, -1); //[1, 2, 3]
 ```
 
 - **forEach**
-- **map**
+> forEach 方法遍历整个数组，并对数组的每个元素执行方法, 可以传递3个参数： 元素 序列 数组本身
+
+
+```
+var a = [1, 2, 3, 4],
+    b = 0;
+a.forEach(
+    function(item, index, self){
+        b += item; //循环结束b=10
+    }
+);
+
+```
+
+需要注意的是**forEach不能停止循环**，没有for循环中的break语句。如果需要提前终止循环，**必须放在try块中，并抛出异常**。抛出异常的时候会触发**foreach.break** 事件
+
+- **map** 
+> 将调用的数组的每个元素传递给指定的函数，并返回新的数组，包含该函数的返回值
+
+```
+var a = [1, 2, 3, 4, 5];
+var b = a.map(function(item){return item*2 }); //[2, 4, 6, 8, 10]
+var c = [{val: 1}, {val: 2}, {val: 3}];
+var d = c.map(function(i){return (i.val + 1)});//[2, 3, 4]
+```
+map遍历和forEach 不一样，map返回的是新数组，不会改变原数组
+
 - **filter**
 - **every和some**
+> every和some是数组的判断， 返回true或者false
+
+如果一个数组的每个元素都满足every中的函数，则返回true；而some只要有符合条件的就返回true。
+
+**every相当于每个元素的 & , some 相当于 |**
+
+```
+var a = [1, 2, 3, 4];
+a.every(function(i){return i < 10}); //true
+a.every(function(i){return i%2 == 0}); //false
+```
+
+```
+var b = [1, 2, 3, 4];
+b.some(function(i){ return i < -1 }); //false
+b.some(function(i){ return i % 2 === 0 }); //true
+```
+
 - **reduce和reduceRight**
+> 
+
 - **indexOf和lastIndexOf**
