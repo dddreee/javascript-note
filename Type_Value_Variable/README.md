@@ -2,10 +2,11 @@
   基本类型值指的是简单的数据段，而引用类型指的是可能有多个值构成的对象。
 
 ##### 5个基本类型值:
-- [Number](#number)
-- [String](#string)
-- Boolean
-- Null and Undefined
+- [Number](#Number)
+- [String](#String)
+- [Boolean](#Boolean)
+- [Null and Undefined](#null和undefined)
+- [全局对象](#全局对象)
 
 ---
 ##### 动态属性
@@ -76,7 +77,9 @@ Math.exp(3);        //--> e的三次幂
 
 ```
 当数字运算返回的结果超过最大整数时，结果是Infinity,负数则是-Infinity;
+
 可以通过isFinite()方法判断;
+
 NaN也有isNaN()判断;
 
 ##### 浮点运算和四舍五入错误
@@ -124,3 +127,52 @@ a.replice('S', 's');    //-->'string' 全文字符替换
 a.toUpperCase();        //-->'STRING' 转换成大写
 a.toLowerCase();        //-->'string' 转换成小写
 ```
+---
+
+##### Boolean
+几种会被转化成false的值：
+
+```
+Boolean(0);
+Boolean(-0);
+Boolean(undefined);
+Boolean(null);
+Boolean(NaN);
+Boolean('');//空字符串, 如果是空格字符换则为true
+
+```
+
+---
+
+##### null和undefined
+null是特殊的object对象
+
+```
+typeof null; //Object
+
+```
+undefined表示变量未定义的值，如果函数没有返回值，也会返回undefined
+
+```
+var a = {},
+    b;
+console.log(a.a);   //undefined
+console.log(b);     //undefined
+
+```
+**null == undefined 返回true** 
+
+**null === undefined 返回false**
+
+**null和undefined不包含任何值和属性**
+
+
+---
+
+##### 全局对象
+> 全局对象在javascript中有着很重要的作用：全局对象的属性是全局定义的符号，javascript程序可以直接使用
+
+- 全局属性，比如undefined、Infinity和NaN
+- 全局函数，比如isNaN()、parseInt()、eval()
+- 构造函数，比如Date()、RegExp()、String()、Object()和Array()
+- 全局对象，比如Math, JSON
