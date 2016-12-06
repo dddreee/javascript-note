@@ -2,7 +2,7 @@
   基本类型值指的是简单的数据段，而引用类型指的是可能有多个值构成的对象。
 
 ##### 5个基本类型值:
-- Number
+- [Number](#Number)
 - String
 - Boolean
 - Null and Undefined
