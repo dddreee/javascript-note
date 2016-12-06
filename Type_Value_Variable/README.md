@@ -104,3 +104,23 @@ x == b; //--> false
 ```
 
 ##### String方法和属性
+字符串方法：
+
+```
+var a = 'String';
+a.charAt(0);        //-->'S', 第一个字符
+a.charAt(a.length-1);   //--> 't', 最后一个字符
+a.substring(1, 4);      //-->'tri'
+a.slice(1,4);           //-->同上
+a.slice(-3);            //-->'ing',最后3个字符
+a.indexOf('S');         //-->0,S第一次出现的位置
+a.lastIndexOf('S');     //-->0, S最后一次出现的位置
+a.indexOf('i',3);       //-->3, i在位置3及之后首次出现的位置
+a.split(', ');          //-->['String']
+a.split('');            //-->['S', 't', 'r', 'i', 'n', 'g']
+a.split();              //-->['String']
+a.split(' ');           //-->['String']
+a.replice('S', 's');    //-->'string' 全文字符替换
+a.toUpperCase();        //-->'STRING' 转换成大写
+a.toLowerCase();        //-->'string' 转换成小写
+```
