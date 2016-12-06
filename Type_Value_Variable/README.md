@@ -3,7 +3,7 @@
 
 ##### 5个基本类型值:
 - [Number](#number)
-- [String](###String)
+- [String](#string)
 - Boolean
 - Null and Undefined
 
