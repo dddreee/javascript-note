@@ -5,6 +5,12 @@
 - [删除属性](#删除属性)
 - [检测属性](#检测属性)
 - [枚举属性](#枚举属性)
+- [属性getter和setter](#属性getter和setter)
+- [对象的特性](#对象的特性)
+- [对象的三个属性](#对象的三个属性)
+- [序列化对象](#序列化对象)
+- [对象方法](#对象方法)
+
 ---
 #### 创建对象
 - 对象直接量
@@ -290,3 +296,158 @@ function keys(o){
 }
 
 ```
+##### 属性getter和setter
+
+> 由getter和setter定义的属性称作“存取器属性”，不同于数据属性，数据属性只有一个简单的值
+
+当程序查询存取器属性的值时，js调用getter方法。当设置存取器属性的值时，调用setter方法。从某种意义上来看，这个方法负责“设置”属性值，可以忽略setter 方法的返回值。
+
+存取器属性和数据属性不同，它不具有可写性。如果只有getter方法，那么是一个只读属性。如果只有setter方法，那么是只写属性，读取时总是返回undefined。
+
+定义存取器属性最简单的方法是使用对象直接量语法的一种扩展写法：
+
+```
+var o = {
+    //普通的数据属性
+    data_drop: 1,
+    
+    //存取器属性
+    get accessor_prop(){
+        //函数体
+    }，
+    
+    set accessor_prop(value){
+        //函数体
+    }
+    
+}
+```
+
+存取器属性定义为一个或两个和属性同名的函数，这个函数定义**没有用function关键字**， 而是用了set、get，没有使用冒号。 注意，与下一个方法或者属性之间有逗号分隔。
+
+```
+var p = {
+    x: 1.0,
+    y: 1.0,
+    
+    get r(){
+        return Math.sqrt(this.x*this.x + this.y*this.y)
+    },
+    set r(new_value){
+        var old_value = this.x*this.x + this.y*this.y,
+            ratio = new_value/old_value;
+        this.x *= ratio;
+        this.y *= ratio;
+    },
+    
+    get theta(){
+        return Math.atan2(this.y, this.x);
+    }
+}
+```
+
+跟数据属性一样，存取器属性也是可以继承的
+
+```
+var q = inherit(p);
+q.x = 1, q.y = 1;
+console.log(q.r);   //可以使用继承的存取器属性
+```
+
+#### 属性的特性
+
+- 值
+- 可写性
+- 可枚举性
+- 可配置性
+
+存取器属性不具有值特性和可写性，他们的可写性由setter方法决定。因此存取器属性的4个特性是读取、写入、可枚举性和可配置性
+
+为了实现属性特性的查询和设置操作，es5中定义了一个“属性描述符”的对象。
+
+```
+//返回{value: 1, writable: true, enumerable: true, configurable: true}
+Object.getOwnPropertyDescriptor({x: 1}, 'x');
+
+var a = {
+    get random(){
+        return Math.random()
+    }
+}
+//{get: function random(), set: undefined, configurable: true, enumerable: true}
+Object.getOwnPropertyDescriptor(a, 'random');
+
+//对于继承属性没返回undefined
+Object.getOwnPropertyDescriptor({}, 'toString'); //undefined
+```
+
+Object.getOwnPropertyDescriptor()只能得到自由属性的描述符，如果想获得继承属性的特性，则需要遍历原型链。
+
+我们可以调用Object.defineProperty()来设置属性的特性，传入要修改的对象、要创建或者修改的属性的名称以及属性描述符对象：
+
+```
+var o = {};
+Object.defineProperty(o, 'x', {
+    value: 1,
+    writable: true,
+    enumerable: false,
+    configurable: true
+});
+
+o.x;        //-->1  属性存在
+Object.keys(o);     //--> [] 但是不可枚举
+
+//设置属性只读
+Object.defineProperty(o, 'x', {
+    writable: false
+});
+
+o.x = 2 //操作失败，在严格模式中会报错
+
+//虽然属性只读，但是依然可以通过配置来修改属性的值
+Object.defineProperty(o, 'x', {
+    value: 2
+});
+
+o.x;    //2
+
+//将x从数据属性修改成存取器属性
+Object.defineProperty(o, 'x', {
+    get: function(){
+        return 0;
+    }
+});
+
+```
+如果需要同时修改或者创建多个属性则需要使用Object.defineProperties()。第一个参数是对象，第二个参数是一个映射表。
+
+```
+var p = Object.defineProperties({}, {
+    x: {
+        value: 1,
+        writable: true,
+        enumerable: true,
+        configurable: true
+    },
+    y: {
+        value: 1,
+        writable: true,
+        enumerable: true,
+        configurable: true
+    },
+    r: {
+        get: function(){
+            return Math.sqrt(this.x*this.x + this.y*this.y)
+        },
+        enumerable: true,
+        configurable: true
+    }
+})
+```
+
+- 如果对象不可扩展，则只能编辑已有的自有属性，不能添加新属性
+- 如果属性时不可配置的，则不能修改可配置性和可枚举性
+- 如果存取器属性不可配置，则不能修改getter和setter方法，也不能转为数据属性
+- 如果数据属性不可配置，则不能转为存取器属性，不能将它的可写性从false改为true，但是可以从true改为false
+- 如果数据属性是不可配置且不可写的，则不能修改它的值。如果是可配置的，那么可以通过defineProperty()方法修改值
+
