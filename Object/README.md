@@ -461,6 +461,53 @@ var p = Object.defineProperties({}, {
 
 使用Object.create()创建的对象使用第一个参数(也可以是null)作为原型。
 
-在es5中将对象作为参数传入Object.getPrototypeof()可以查询它的原型。在es3中，经常用表达式o.constructor.prototype 来检测一个对象的原型。通过new表达式创建的对象，通常继承一个constructor属性，这个属性指代创建这个函数的构造函数。(更多的细节再[9.2节](../Array/)进一步讨论)
+在es5中将对象作为参数传入Object.getPrototypeof()可以查询它的原型。在es3中，经常用表达式o.constructor.prototype 来检测一个对象的原型。通过new表达式创建的对象，通常继承一个constructor属性，这个属性指代创建这个函数的构造函数。(更多的细节再[9.2节](#)进一步讨论)
+
+
+通过对象直接量或者Object.create()创建的对象包含一个名为constructor的属性，这个属性指代Object()的构造函数，constructor.prototype才是真正的原型。要想检测一个对象是否是另一个对象的原型（或者处于原型链中），可以使用isPrototypeOf()方法
+
+```
+var p = {x: 1},
+    o = Object.create(p);
+    
+p.isPrototypeOf(o); //true
+Object.prototype.isPrototypeOf(o)   //true
+```
+对象还有一个__proto__属性，但是ie和opera还不支持
+- 类属性
+
+es3和es5都没有设置这个属性的方法，只有toString()方法会返回对应的字符串
+[object class]
+
+- 可扩展性
+
+对象的可扩展性用以表示是否可以给对象添加新属性。所有内置对象和自定义对象都是显式可扩展的。
+
+es5定义了一个方法--Object.esExtensible()，来判断对象是否是可扩展的。
+
+Object.preventExtensions()可以将对象转换为不可扩展的。一旦转换成不可扩展的对象，无法再转换回可扩展的了！！
+
+preventExtensions()只影响对象本身的可扩展性，如果给它的原型添加属性，这个不可扩展的对象同样能继承新属性。
+
+Object.seal()和preventExtensions()类型，除了能将对象设置为不可扩展的还能降对象的所有自有属性设置成不可配置的，不能给这个属性添加新属性，已有的属性不能删除或者配置，但是已有的可写属性依然可以设置。可以用Object.isSealed()来检测对象是否封闭
+
+Object.freeze()可以“冻结”对象。它将对象设置为不可扩展的，属性设置为不可配置外，还能将对象的所有数据属性设置为只读的。可以通过Object.isFrozen()来检测对象是否冻结。
+
+#### 序列化对象
+
+NaN、Infinity和-Infinity序列化的结果是null，日期对象的序列化结果是ISO格式的日期字符串，但JSON.parse()依然会保留他们的字符串形态，而不是还原成原始的日期对象。
+
+函数、RegExp、Error对象和undefined值不能序列化和还原。
+
+JSON.stringify()只能序列化对象可枚举的自有属性。
+
+JSON.stringify()和JSON.parse()都能接受第二个可选参数，通过传入需要序列化或还原的属性列表来定制自定义的序列化或还原操作。Javascript核心参考中有详细文档
+
+#### 对象方法
+
+- toString()方法
+- toLocaleString()方法
+- toJSON()方法
+- valueOf()方法
 
 
