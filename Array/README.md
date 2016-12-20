@@ -1,5 +1,5 @@
 ##### 声明一个数组的方式有：
-```
+```javascript
 var a = []; 
 var b = new Array(); // --> []
 var c = new Array(6); // --> length为6的数组，每个元素都是undefined
@@ -10,7 +10,7 @@ var d = new Array(1,2,3); // --> [1,2,3]
 
 
 ##### 可以通过Object.defineProperty()让数组的length属性变成只读的，如：
-```
+```javascript
 var a= [1, 2, 3];
 Object.defineProperty(a, 'length', {writable: false});
 a.length = 1; //--> length属性不会改变
@@ -19,7 +19,7 @@ a.length = 1; //--> length属性不会改变
 
 ##### 数组的元素的增加和减少 posh pop shift unshift
 
-```
+```javascript
 var a = [1, 2, 3];
 a.push(4); //--> [1, 2, 3, 4]
 a.pop(); //--> a = [1, 2, 3]   ; pop 方法会删除并返回最后一个元素，会改变原数组
