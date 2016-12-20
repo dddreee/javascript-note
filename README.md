@@ -11,7 +11,7 @@ javascript 学习笔记
 
 ## [Array](Array)
 
-## Function
+## [Function](Function)
 
 ## Class_and_Module
 
