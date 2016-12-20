@@ -15,7 +15,7 @@
 #### 创建对象
 - 对象直接量
 
-```
+```javascript
 var a = {},
     b = {x: 0, y: 1},
     c = {x: b.x, y: b.y},
@@ -33,7 +33,7 @@ var a = {},
 
 > 通过new运算符创建一个对象，这里称作构造函数，构造函数用以初始化一个新创建的对象
 
-```
+```javascript
 var a = new Object(),
     b = new Array(),
     c = new Date()
@@ -55,7 +55,7 @@ Object.prototype不继承任何属性，没有原型对象。
 
 Object.create()可以传入两个参数，第一个参数是这个原型的对象，还有第二个可选参数。
 
-```
+```javascript
 var a = Object.create({x: 1, y: 1});
 a继承了x和y属性
 ```
@@ -66,7 +66,7 @@ a继承了x和y属性
 可以通过任务原型创建新对象（可以使任意对象可继承）
 
 
-```
+```javascript
 //inherit()返回了一个继承自原型对像p的属性的新对象
 //这里使用es5中的Object.create()函数
 //如果不存在Object.create()则使用其他方法
@@ -99,7 +99,7 @@ inherit()函数的作用就是防止库函数无意间修改那些不受你控�
 
 查询 对象o的属性x，如果o中不存在x，那么就会沿着o的原型链查，直到找到x或者找到一个原型是null的对象位置。
 
-```
+```javascript
 var o = {};
 o.x = 1;
 
@@ -125,7 +125,7 @@ q.x = 4; //会覆盖q继承的x属性，o的x属性不会变
 访问一个不存在的属性不会报错，单数如果访问一个不存在的对象的属性就会报错
 
 内置构造函数的原型是只读的。
-```
+```javascript
 Object.prototype = 1; //不会报错，但是没被修改为1
 ```
 
@@ -134,7 +134,7 @@ Object.prototype = 1; //不会报错，但是没被修改为1
 #### 删除属性
 
 delete运算符可以删除对象的属性，delete只是断开属性和宿主对象的联系，而不会去操作属性中的属性。
-```
+```javascript
 var a = {p: {x: 1}},
     b = a.p;
     
@@ -146,7 +146,7 @@ console.log(b.x); //--> 删除了a.p属性，但是b.x的值还是1
 
 delete不能删除那些可配置性为false的属性。某些内置对象的属性是不可配置的，比如通过变量声明和函数声明创建的全局对象的属性。在严格模式中，删除一个不可配置属性会报一个类型错误。在非严格模式中，delete操作失败会返回false
 
-```
+```javascript
 delete Object.prototype     //不能删除，属性不可配置
 var x = 1;
 delete this.x;              //返回false
@@ -163,7 +163,7 @@ delete this.f;              //不能删除全局函数
 > 可以通过in运算符、hasOwnPreperty() 和 propertyInEnumerable()方法来判断某个属性是否存在于某个对象中。
 
 in 运算符，如果对象的自由属性或继承属性中包含这个属性则返回true
-```
+```javascript
 var o = {x: 1};
 'x' in o;           //true
 'y' in o;           //false
@@ -171,7 +171,7 @@ var o = {x: 1};
 ```
 
 hasOwnProperty()方法用来检测是否是自有属性，如果是继承的属性会返回false
-```
+```javascript
 var o = {x: 1}
 o.hasOwnProperty('x');      //true
 o.hasOwnProperty('y');      //false
@@ -180,7 +180,7 @@ o.hasOwnProperty('toString');   //false
 
 propertyIsEnumerable()是hasOwnProperty()的增强版，只有检测到自有属性且这个属性可枚举时才返回true。有些内置属性时不可枚举的
 
-```
+```javascript
 var o = inherit({y: 2});
 o.x = 1;
 o.propertyIsEnumerable('y');        //false
@@ -189,7 +189,7 @@ Object.prototype.propertyIsEnumerable('toString');      //false  toString不可�
 ```
 
 有一种情况只能用in运算符来判断，就是存在并且值为undefined的属性
-```
+```javascript
 var o = {x: 1, y: undefined};
 'x' in o;   //true
 'y' in o;   //true
@@ -200,7 +200,7 @@ delete o.x
 #### 枚举属性
 > for/in 循环可以在循环体中遍历对象中所有可枚举的属性（**包括自有和继承的**），把属性名称赋值给循环变量。**对象继承的内置方法不可枚举**，但在代码中给对象添加的属性都是可枚举的。
 
-```
+```javascript
 var o = {
     x: 1,
     y: 2,
@@ -221,7 +221,7 @@ for(i in p){
 
 定义一个extend()函数来枚举属性
 
-```
+```javascript
 function extend(o, p){
     for (prop in p){
         o[prop] = p[prop];  //遍历p中的所有属性，将属性添加至o中
@@ -306,7 +306,7 @@ function keys(o){
 
 定义存取器属性最简单的方法是使用对象直接量语法的一种扩展写法：
 
-```
+```javascript
 var o = {
     //普通的数据属性
     data_drop: 1,
@@ -325,7 +325,7 @@ var o = {
 
 存取器属性定义为一个或两个和属性同名的函数，这个函数定义**没有用function关键字**， 而是用了set、get，没有使用冒号。 注意，与下一个方法或者属性之间有逗号分隔。
 
-```
+```javascript
 var p = {
     x: 1.0,
     y: 1.0,
@@ -348,7 +348,7 @@ var p = {
 
 跟数据属性一样，存取器属性也是可以继承的
 
-```
+```javascript
 var q = inherit(p);
 q.x = 1, q.y = 1;
 console.log(q.r);   //可以使用继承的存取器属性
@@ -365,7 +365,7 @@ console.log(q.r);   //可以使用继承的存取器属性
 
 为了实现属性特性的查询和设置操作，es5中定义了一个“属性描述符”的对象。
 
-```
+```javascript
 //返回{value: 1, writable: true, enumerable: true, configurable: true}
 Object.getOwnPropertyDescriptor({x: 1}, 'x');
 
@@ -385,7 +385,7 @@ Object.getOwnPropertyDescriptor()只能得到自由属性的描述符，如果�
 
 我们可以调用Object.defineProperty()来设置属性的特性，传入要修改的对象、要创建或者修改的属性的名称以及属性描述符对象：
 
-```
+```javascript
 var o = {};
 Object.defineProperty(o, 'x', {
     value: 1,
@@ -421,7 +421,7 @@ Object.defineProperty(o, 'x', {
 ```
 如果需要同时修改或者创建多个属性则需要使用Object.defineProperties()。第一个参数是对象，第二个参数是一个映射表。
 
-```
+```javascript
 var p = Object.defineProperties({}, {
     x: {
         value: 1,
@@ -466,7 +466,7 @@ var p = Object.defineProperties({}, {
 
 通过对象直接量或者Object.create()创建的对象包含一个名为constructor的属性，这个属性指代Object()的构造函数，constructor.prototype才是真正的原型。要想检测一个对象是否是另一个对象的原型（或者处于原型链中），可以使用isPrototypeOf()方法
 
-```
+```javascript
 var p = {x: 1},
     o = Object.create(p);
     

@@ -13,7 +13,7 @@
 
 引用类型的值，我们可以添加、改变和删除其属性和方法，如果对象的不不背销毁或者属性不被删除，则这个属性将一直存在。
 
-```
+```javascript
 var a = {name: 'James'}
 a.age = 18;
 console.log(a.age); //-->18
@@ -22,7 +22,7 @@ console.log(a.age); //-->undefined
 ```
 **无法给直接类型值添加属性**
 
-```
+```javascript
 var a = 'String';
 a.age = 18;
 console.log(a.age); //-->undefined
@@ -33,7 +33,7 @@ console.log(a.age); //-->undefined
 ##### 复制变量值
 复制基本类型值时，原先的变量改变后不影响复制的值
 
-```
+```javascript
 var a = 1,
     b = a;
 console.log(a, b); //--> 1,1
@@ -42,7 +42,7 @@ console.log(a, b); //--> 2,1 b复制a后是完全独立的
 ```
 复制引用类型值时，复制的是指向引用类型值得**指针**，这个指针**指向存储在堆中的一个对象**。
 
-```
+```javascript
 var a = {},
     b = a;
 a.name = 'James';
@@ -57,7 +57,7 @@ console.log(a.name); //-->Jack
 在javascript中能够表示的最大整数范围是 **-2^53 ~ 2^53**
 ##### javascript 中的算术运算
 
-```
+```javascript
 Math.pow(2,53);     //--> 2的53次方
 Math.round(.6);     //--> 1.0 四舍五入，返回的还是浮点型
 Math.ceil(.6);      //--> 1.0 向上取整
@@ -84,7 +84,7 @@ NaN也有isNaN()判断;
 
 ##### 浮点运算和四舍五入错误
 
-```
+```javascript
 var x = .3 - .2,
     b = .2 - .1;
 x == b; //--> false
@@ -109,7 +109,7 @@ x == b; //--> false
 ##### String方法和属性
 字符串方法：
 
-```
+```javascript
 var a = 'String';
 a.charAt(0);        //-->'S', 第一个字符
 a.charAt(a.length-1);   //--> 't', 最后一个字符
@@ -132,7 +132,7 @@ a.toLowerCase();        //-->'string' 转换成小写
 ##### Boolean
 几种会被转化成false的值：
 
-```
+```javascript
 Boolean(0);
 Boolean(-0);
 Boolean(undefined);
@@ -147,13 +147,13 @@ Boolean('');//空字符串, 如果是空格字符换则为true
 ##### null和undefined
 null是特殊的object对象
 
-```
+```javascript
 typeof null; //Object
 
 ```
 undefined表示变量未定义的值，如果函数没有返回值，也会返回undefined
 
-```
+```javascript
 var a = {},
     b;
 console.log(a.a);   //undefined
@@ -183,14 +183,14 @@ console.log(b);     //undefined
 
 > 而对对象引用进行操作，例如数组的一些操作，会改变原先的数组
 
-```
+```javascript
 var a = {x: 1};
 a.y = 2;
 a.x = 3;//对象属性可以改变
 ```
 对象的比较并非是值的比较，具有相同属性和值的两个单独的对象不相同，相同元素的两个单独的数组也不相同；
 
-```
+```javascript
 var a = {x: 1, y: 1},
     b = {x: 1, y: 1},
     x = [],
@@ -202,7 +202,7 @@ x === y;        //false
 
 对象通常被称为**引用类型**，对象的值都是引用。**对象的比较是引用的比较，当两个对象引用同一个基对象是，才相等。**
 
-```
+```javascript
 var a = [],
     b = a;
 b === a;        //true
